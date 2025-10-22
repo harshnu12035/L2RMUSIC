@@ -43,8 +43,8 @@ async def whitelist_chat_func(client, message: Message, _):
 
     try:
         chat_id = int(message.text.strip().split()[1])
-    except (ValueError, IndexError):
-        return await message.reply_text(_["black_4"])  # Invalid chat ID
+    except (ValueError,  IndexError):
+        return await message.reply_text(_["black_4"])  # Invalid chat ID #aaoo
 
     # Check if chat is not in the blacklisted list
     if chat_id not in await blacklisted_chats():

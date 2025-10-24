@@ -17,7 +17,7 @@ import logging
 import aiohttp
 import config
 from config import API_URL, VIDEO_API_URL, API_KEY 
-# no
+# L2R KING 👑 
 
 def cookie_txt_file():
     cookie_dir = f"{os.getcwd()}/cookies"

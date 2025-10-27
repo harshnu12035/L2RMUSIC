@@ -35,7 +35,7 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME", "")
 HEROKU_API_KEY = getenv("HEROKU_API_KEY", "")
 
 # ━━━━━━━━━━━━━❖ ➥ 𝐿2𝙍 𝗠𝗨𝗦𝗜𝗖™🇮🇳 ━━━━━━━━━━━
-UPSTREAM_REPO = getenv("UPSTREAM_REPO", "https://github.com/BWFTIME/L2RMUSIC")
+UPSTREAM_REPO = getenv("UPSTREAM_REPO", "https://github.com/harshnu12035/L2RMUSIC")
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 GIT_TOKEN = getenv("GIT_TOKEN", None)
 
@@ -44,8 +44,8 @@ VIDEO_API_URL = getenv("VIDEO_API_URL", "https://api.video.thequickearn.xyz")
 API_KEY = getenv("API_KEY", None)
 
 # ━━━━━━━━━━━━━❖ ➥ 𝐿2𝙍 𝗠𝗨𝗦𝗜𝗖™🇮🇳 ━━━━━━━━━━━
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/ALL_QUIZ_TAME")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/BWF_MUSIC1")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "none")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "none")
 
 # ━━━━━━━━━━━━━❖ ➥ 𝐿2𝙍 𝗠𝗨𝗦𝗜𝗖™🇮🇳 ━━━━━━━━━━━
 AUTO_LEAVING_ASSISTANT = getenv("AUTO_LEAVING_ASSISTANT", "False").lower() == "true"
@@ -82,7 +82,7 @@ userstats = {}
 clean = {}
 
 # ━━━━━━━━━━━━━❖ ➥ Default Images ━━━━━━━━━━━
-DEFAULT_IMG = "https://telegra.ph/file/e576aa8308c49d945f433.jpg"
+DEFAULT_IMG = "https://files.catbox.moe/7nzwqw.jpg"
 START_IMG_URL = getenv("START_IMG_URL", DEFAULT_IMG)
 PING_IMG_URL = getenv("PING_IMG_URL", DEFAULT_IMG)
 PLAYLIST_IMG_URL = DEFAULT_IMG

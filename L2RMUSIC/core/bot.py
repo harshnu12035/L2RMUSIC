@@ -1,4 +1,4 @@
-import asyncio # ༄𝐿 2 𝙍.🖤🜲𝐊𝐈𝐍𝐆❦︎ 𝆺𝅥⃝🍷
+import asyncio
 from pyrogram import Client, errors
 from pyrogram.enums import ChatMemberStatus, ParseMode
 
@@ -23,36 +23,44 @@ class Ashish(Client):
     async def start(self):
         LOGGER(__name__).info("Attempting to connect to Telegram...")
         
-        # --- FIX: Safe Login Loop with FloodWait Handler ---
+        # --- FIX: Comprehensive Error Handling for Login (Including ValueError) ---
         while True:
             try:
-                # super().start() ही वह जगह है जहाँ auth.ImportBotAuthorization होता है
+                # This line attempts to connect and log in the bot
                 await super().start()
-                break  # अगर login सफल होता है, तो loop से बाहर निकलें
+                break  # If login is successful, break the loop
                 
             except errors.FloodWait as e:
                 wait_time = e.value
                 LOGGER(__name__).warning(
                     f"⚠️ Telegram FloodWait during login. Waiting for {wait_time} seconds before retrying..."
                 )
-                # Telegram के बताए गए समय के लिए रुकें
                 await asyncio.sleep(wait_time)
                 
-            except Exception as ex:
-                # Login के दौरान आने वाली किसी भी अन्य fatal error को handle करें
+            except (ValueError, errors.AuthKeyUnregistered, errors.BotMethodInvalid, errors.BadRequest) as ex:
+                # This block specifically handles the ValueError and other fatal login errors.
+                # ValueError often means an invalid or missing config variable (API_ID, BOT_TOKEN, etc.).
                 LOGGER(__name__).error(
-                    f"Bot failed to start due to a non-FloodWait error: {type(ex).__name__} - {ex}"
+                    f"❌ Fatal Login Error! Check your BOT_TOKEN, API_ID, and API_HASH in config/Heroku Config Vars.\n  Reason: {type(ex).__name__} - {ex}"
+                )
+                # Application should exit if a fatal login error occurs as it cannot proceed.
+                exit() 
+                
+            except Exception as ex:
+                # Catch any other unexpected error during the start process
+                LOGGER(__name__).error(
+                    f"Bot failed to start due to an unexpected error: {type(ex).__name__} - {ex}"
                 )
                 exit()
         # --- END FIX ---
         
-        # Login सफल होने के बाद, bot info सेट करें
+        # Login is successful, set bot info
         self.id = self.me.id
         self.name = self.me.first_name + " " + (self.me.last_name or "")
         self.username = self.me.username
         self.mention = self.me.mention
 
-        # L2R
+        # Logger/Log Channel Access Check (Original Code)
         try:
             await self.send_message(
                 chat_id=config.LOGGER_ID,
@@ -64,11 +72,13 @@ class Ashish(Client):
             )
             exit()
         except Exception as ex:
+            # Added a more specific log for the log channel error
             LOGGER(__name__).error(
-                f"Bot has failed to access the log group/channel.\n  Reason : {type(ex).__name__}."
+                f"Bot has failed to access the log group/channel.\n  Reason : {type(ex).__name__} - {ex}."
             )
             exit()
 
+        # Check for Admin status in log channel
         a = await self.get_chat_member(config.LOGGER_ID, self.id)
         if a.status != ChatMemberStatus.ADMINISTRATOR:
             LOGGER(__name__).error(
